@@ -1,0 +1,13 @@
+{
+  "exclude": {
+    "tags": ["Internal", "Debug"],
+    "pathPatterns": [
+      "/api/test/*",
+      "/api/debug/*"
+    ]
+  },
+  "options": {
+    "caseSensitive": false,
+    "onNoMatch": "warn"
+  }
+}

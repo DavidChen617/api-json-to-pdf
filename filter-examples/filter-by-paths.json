@@ -1,0 +1,12 @@
+{
+  "include": {
+    "pathPatterns": [
+      "/api/AuthCenter/*"
+    ]
+  },
+  "options": {
+    "strictMatch": false,
+    "caseSensitive": false,
+    "onNoMatch": "warn"
+  }
+}

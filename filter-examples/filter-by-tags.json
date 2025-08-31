@@ -1,0 +1,9 @@
+{
+  "include": {
+    "tags": ["AuthCenter", "CSR"]
+  },
+  "options": {
+    "caseSensitive": false,
+    "onNoMatch": "warn"
+  }
+}

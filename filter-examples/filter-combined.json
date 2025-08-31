@@ -1,0 +1,14 @@
+{
+  "include": {
+    "tags": ["AuthCenter"],
+    "pathPatterns": ["/api/CSR/*"]
+  },
+  "exclude": {
+    "pathPatterns": ["/api/AuthCenter/GetAuthUrl"]
+  },
+  "options": {
+    "strictMatch": false,
+    "caseSensitive": false,
+    "onNoMatch": "warn"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "include": {
+    "apis": [
+      { "method": "GET", "path": "/api/AuthCenter/GetAuthUrl" },
+      { "method": "POST", "path": "/api/AuthCenter/GetAccessToken" },
+      { "method": "GET", "path": "/api/Users/GetUserInfo" }
+    ]
+  },
+  "options": {
+    "strictMatch": true,
+    "caseSensitive": false,
+    "onNoMatch": "warn"
+  }
+}

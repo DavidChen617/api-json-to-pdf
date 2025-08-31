@@ -1,0 +1,27 @@
+{
+  "include": {
+    "pathPatterns": [
+      "/api/AuthCenter/*",
+      "/api/CIB/QueryAccountInfo",
+      "/api/CIB/QueryTransactionRecord"
+    ],
+    "tags": [
+      "AuthCenter"
+    ],
+    "methods": [
+      "POST",
+      "GET"
+    ]
+  },
+  "exclude": {
+    "pathPatterns": [
+      "*/internal/*",
+      "*/debug/*"
+    ]
+  },
+  "options": {
+    "strictMatch": false,
+    "caseSensitive": false,
+    "onNoMatch": "warn"
+  }
+}

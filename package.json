@@ -1,0 +1,26 @@
+{
+  "name": "swagger-pdf-generator",
+  "version": "1.0.0",
+  "description": "Generate PDF documentation from Swagger/OpenAPI specifications",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "generate": "tsx src/index.ts",
+    "generate:prod": "node dist/index.js"
+  },
+  "keywords": ["swagger", "openapi", "pdf", "documentation"],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.15.0",
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@types/pdfmake": "^0.2.11",
+    "pdfmake": "^0.2.20"
+  }
+}
