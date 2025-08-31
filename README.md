@@ -80,20 +80,11 @@ Create a filter configuration file:
       "/api/orders/create",
       "/api/products/list"
     ],
-    "tags": [
-      "Users",
-      "Orders"
-    ],
-    "methods": [
-      "POST",
-      "GET"
-    ]
+    "tags": ["Users", "Orders"],
+    "methods": ["POST", "GET"]
   },
   "exclude": {
-    "pathPatterns": [
-      "*/internal/*",
-      "*/debug/*"
-    ]
+    "pathPatterns": ["*/internal/*", "*/debug/*"]
   },
   "options": {
     "strictMatch": false,
@@ -242,5 +233,3 @@ If you encounter any issues or have questions:
 3. Include your API specification format and error logs
 
 ---
-
-**Made with ❤️ for better API documentation**
