@@ -71,12 +71,19 @@ export function expandSchema(schema: SwaggerSchema | undefined, definitions: { [
       });
 
       // If it's a complex type, recursively expand
-      if ((propSchema as any).type === 'object' || (propSchema as any).properties) {
+      const shouldExpand = (
+        (propSchema as any).type === 'object' || 
+        (propSchema as any).properties ||
+        (propSchema as any).$ref ||
+        (propSchema as any).allOf ||
+        // Handle schemas without explicit type but might be complex objects
+        (!(propSchema as any).type && !(propSchema as any).format && Object.keys(propSchema as any).length > 1)
+      );
+      
+      if (shouldExpand) {
         result.push(...expandSchema(propSchema, definitions, level + 1, maxLevel));
       } else if ((propSchema as any).type === 'array' && (propSchema as any).items) {
         result.push(...expandSchema((propSchema as any).items, definitions, level + 1, maxLevel));
-      } else if ((propSchema as any).$ref) {
-        result.push(...expandSchema(propSchema, definitions, level + 1, maxLevel));
       }
     }
   } else if (schema.type === 'array' && schema.items) {
