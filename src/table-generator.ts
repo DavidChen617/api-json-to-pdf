@@ -4,14 +4,32 @@ import type { ApiEndpoint, SwaggerDefinition, PdfContent, ExpandedField } from '
 import { TABLE_CONFIG, PDF_LAYOUT } from './utils/constants';
 
 // Extract common table generation function
-function generateFieldTable(expandedFields: ExpandedField[], title: string): PdfContent {
-  const tableBody = [
-    [
-      { text: '欄位名稱', style: ['tableHeader'] },
-      { text: '型別', style: ['tableHeader'] },
-      { text: '說明', style: ['tableHeader'] }
-    ]
-  ];
+function generateFieldTable(expandedFields: ExpandedField[], title: string, apiInfo?: string): PdfContent {
+  const tableBody = [];
+  
+  // Add API info row if provided
+  if (apiInfo) {
+    tableBody.push([
+      { 
+        text: `[${apiInfo}] ${title}`,
+        style: ['tableHeader'],
+        colSpan: 3,
+        alignment: 'center',
+        fillColor: '#ffffff',
+        border: [false, false, false, false], // Remove all borders
+        color: '#000000' // Set to black color
+      },
+      {},
+      {}
+    ]);
+  }
+  
+  // Add regular header
+  tableBody.push([
+    { text: '欄位名稱', style: ['tableHeader'] },
+    { text: '型別', style: ['tableHeader'] },
+    { text: '說明', style: ['tableHeader'] }
+  ]);
   
   expandedFields.forEach(field => {
     // Calculate indentation level
@@ -29,12 +47,14 @@ function generateFieldTable(expandedFields: ExpandedField[], title: string): Pdf
     ]);
   });
   
+  const headerRows = apiInfo ? 2 : 1; // If API info exists, header has two rows
+  
   const tableContent: any = {
     table: {
-      headerRows: 1,
+      headerRows: headerRows,
       widths: ['30%', '15%', '*'],
       body: tableBody,
-      keepWithHeaderRows: 1, // Ensure header stays with content
+      keepWithHeaderRows: headerRows, // Ensure header stays with content
       dontBreakRows: false // Allow pagination between rows
     },
     layout: PDF_LAYOUT.DEFAULT_TABLE_LAYOUT,
@@ -50,7 +70,7 @@ function generateFieldTable(expandedFields: ExpandedField[], title: string): Pdf
 }
 
 // Generate REQUEST section
-export function generateRequestSection(endpoint: ApiEndpoint, definitions: { [name: string]: SwaggerDefinition }): PdfContent[] {
+export function generateRequestSection(endpoint: ApiEndpoint, definitions: { [name: string]: SwaggerDefinition }, apiInfo?: string): PdfContent[] {
   const content: PdfContent[] = [];
   
   if (endpoint.parameters && endpoint.parameters.length > 0) {
@@ -71,7 +91,7 @@ export function generateRequestSection(endpoint: ApiEndpoint, definitions: { [na
             margin: [0, 8, 0, 5]
           });
           
-          content.push(generateFieldTable(expandedFields, 'REQUEST BODY'));
+          content.push(generateFieldTable(expandedFields, 'REQUEST', apiInfo));
         }
       } else {
         // Original logic for simple parameters
@@ -115,7 +135,7 @@ export function generateRequestSection(endpoint: ApiEndpoint, definitions: { [na
 }
 
 // Generate RESPONSE section
-export function generateResponseSection(endpoint: ApiEndpoint, definitions: { [name: string]: SwaggerDefinition }): PdfContent[] {
+export function generateResponseSection(endpoint: ApiEndpoint, definitions: { [name: string]: SwaggerDefinition }, apiInfo?: string): PdfContent[] {
   const content: PdfContent[] = [];
   
   if (endpoint.responses && Object.keys(endpoint.responses).length > 0) {
@@ -142,7 +162,7 @@ export function generateResponseSection(endpoint: ApiEndpoint, definitions: { [n
             margin: [0, 5, 0, 5]
           });
           
-          content.push(generateFieldTable(expandedFields, 'RESPONSE MODEL'));
+          content.push(generateFieldTable(expandedFields, 'RESPONSE', apiInfo));
         }
       } else {
         // Original logic for simple responses

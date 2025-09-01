@@ -43,13 +43,14 @@ export async function generatePdfDefinition(apiSpec: any, filterFilePath?: strin
         const schemaDefinitions = apiSpec.definitions || apiSpec.components?.schemas || {};
         
         // REQUEST section
-        const requestContent = generateRequestSection(endpoint, schemaDefinitions);
+        const apiInfo = `${endpoint.method.toUpperCase()} ${endpoint.path}`;
+        const requestContent = generateRequestSection(endpoint, schemaDefinitions, apiInfo);
         if (requestContent.length > 0) {
           apiContent.push(...requestContent);
         }
         
         // RESPONSE section  
-        const responseContent = generateResponseSection(endpoint, schemaDefinitions);
+        const responseContent = generateResponseSection(endpoint, schemaDefinitions, apiInfo);
         if (responseContent.length > 0) {
           apiContent.push(...responseContent);
         }
